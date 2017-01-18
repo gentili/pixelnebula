@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 using namespace std;
@@ -11,7 +11,7 @@ void abort(string msg) {
 }
 
 int main(int argc, char ** argv) {
-    cout << "Initializing..." << endl;
+    cout << "Initialddgizing..." << endl;
     if (!glfwInit())
         abort("glfwInit failed");
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
