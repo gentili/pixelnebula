@@ -133,6 +133,12 @@ void ShaderProgram3D::attachAndLink()
 	_uniformIndex_projectionMatrix = getUniformLocation("projectionMatrix");
 }
 
+void ShaderProgram3D::setViewMatrix()
+{
+	//glUseProgram(_id);
+	//glUniformMatrix4fv(_uniformIndex_viewMatrix,1,true,)
+}
+
 std::map<std::string, std::unique_ptr<ShaderProgram>> ShaderManager::_shaderPrograms;
 
 bool ShaderManager::Init()

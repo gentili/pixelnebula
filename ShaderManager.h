@@ -44,6 +44,7 @@ class ShaderProgram3D : public ShaderProgram {
 public:
 	ShaderProgram3D(const char * name) : ShaderProgram(name) {};
 	void attachAndLink();
+	void setViewMatrix();
 
 protected:
 	GLuint _uniformIndex_modelMatrix = 0;
