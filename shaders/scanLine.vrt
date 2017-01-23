@@ -1,4 +1,6 @@
 #version 150
+
+// ShaderProgramType:TWO_D
 in vec2 pos;
 in vec2 tex;
 

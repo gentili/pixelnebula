@@ -7,6 +7,7 @@ my @files = readdir $dir;
 closedir $dir;
 
 my @shaders;
+my %programs;
 
 print<<EOF
 //
@@ -34,6 +35,9 @@ foreach my $file (@files) {
     while (my $line = <$fh>) {
         chomp($line);
         print "\"$line\\n\"\n";
+        if ($line =~ /ShaderProgramType:(\w+)/) {
+            $programs{"$program"} = $1;
+        }
     }
     print ";\n";
     close ($fh);
@@ -76,5 +80,19 @@ foreach my $shader (@shaders) {
     } else {
         die ("Unknown Shader Type ($$shader[2])");
     }
+}
+print "};\n\n";
+
+print<<EOF
+enum ShaderProgramTypeEnum {
+    TWO_D = 0,
+    THREE_D = 1
+};
+EOF
+;
+
+print "\nstatic const ShaderProgramTypeEnum shaderProgramType[] = {\n";
+foreach my $shader (@shaders) {
+    print "    " . $programs{$$shader[0]} . ",\n";
 }
 print "};\n\n";
