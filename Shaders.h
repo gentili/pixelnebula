@@ -21,6 +21,7 @@ static const char* concursionPoint_frg =
 static const char* concursionPoint_vrt =
 "#version 150\n"
 "\n"
+"// ShaderProgramType:THREE_D\n"
 "uniform mat4 modelMatrix;\n"
 "uniform mat4 viewMatrix;\n"
 "uniform mat4 projectionMatrix;\n"
@@ -65,6 +66,7 @@ static const char* glowSphere_frg =
 static const char* glowSphere_vrt =
 "#version 150\n"
 "\n"
+"// ShaderProgramType:THREE_D\n"
 "uniform mat4 modelMatrix;\n"
 "uniform mat4 viewMatrix;\n"
 "uniform mat4 projectionMatrix;\n"
@@ -120,6 +122,8 @@ static const char* scanLine_frg =
 
 static const char* scanLine_vrt =
 "#version 150\n"
+"\n"
+"// ShaderProgramType:TWO_D\n"
 "in vec2 pos;\n"
 "in vec2 tex;\n"
 "\n"
@@ -148,6 +152,7 @@ static const char* simpleIndexedColor_frg =
 static const char* simpleIndexedColor_vrt =
 "#version 150\n"
 "\n"
+"// ShaderProgramType:THREE_D\n"
 "uniform mat4 modelMatrix;\n"
 "uniform mat4 viewMatrix;\n"
 "uniform mat4 projectionMatrix;\n"
@@ -168,7 +173,7 @@ static const char* simpleIndexedColor_vrt =
 
 static const int shaderCount = 8;
 
-static const char* const programNames[] = {
+static const char* const shaderProgramNames[] = {
     "concursionPoint",
     "concursionPoint",
     "glowSphere",
@@ -217,5 +222,21 @@ static const ShaderTypeEnum shaderType[] = {
     VERTEX,
     FRAGMENT,
     VERTEX,
+};
+
+enum ShaderProgramTypeEnum {
+    TWO_D = 0,
+    THREE_D = 1
+};
+
+static const ShaderProgramTypeEnum shaderProgramType[] = {
+    THREE_D,
+    THREE_D,
+    THREE_D,
+    THREE_D,
+    TWO_D,
+    TWO_D,
+    THREE_D,
+    THREE_D,
 };
 

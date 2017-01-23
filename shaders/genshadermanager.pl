@@ -45,7 +45,7 @@ foreach my $file (@files) {
 
 print "\nstatic const int shaderCount = ".($#shaders+1).";\n";
 
-print "\nstatic const char* const programNames[] = {\n";
+print "\nstatic const char* const shaderProgramNames[] = {\n";
 foreach my $shader (@shaders) {
     print "    \"$$shader[0]\",\n";
 }

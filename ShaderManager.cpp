@@ -86,7 +86,7 @@ void ShaderProgram::attachAndLink()
 	cout << "Active attributs:" << attr_count << endl;
 	for (int i = 0; i < attr_count; i++) {
 		std::vector<GLchar> attrName(20);
-		glGetActiveAttrib(_id, i, attrName.size(), NULL, NULL, NULL, &attrName[0]);
+		glGetActiveAttrib(_id, i, (GLsizei) attrName.size(), NULL, NULL, NULL, &attrName[0]);
 		cout << "    " << attrName.data() << endl;
 	}
 	GLint uni_count;
@@ -94,7 +94,7 @@ void ShaderProgram::attachAndLink()
 	cout << "Active uniforms:" << uni_count << endl;
 	for (int i = 0; i < uni_count; i++) {
 		std::vector<GLchar> uniName(20);
-		glGetActiveUniform(_id, i, uniName.size(), NULL, NULL, NULL, &uniName[0]);
+		glGetActiveUniform(_id, i, (GLsizei) uniName.size(), NULL, NULL, NULL, &uniName[0]);
 		cout << "    " << uniName.data() << endl;
 	}
 }
@@ -124,16 +124,28 @@ GLuint ShaderProgram::getUniformLocation(string name)
 	}
 	return loc;
 }
+
+void ShaderProgram3D::attachAndLink()
+{
+	ShaderProgram::attachAndLink();
+	_uniformIndex_modelMatrix = getUniformLocation("modelMatrix");
+	_uniformIndex_viewMatrix = getUniformLocation("viewMatrix");
+	_uniformIndex_projectionMatrix = getUniformLocation("projectionMatrix");
+}
+
 std::map<std::string, std::unique_ptr<ShaderProgram>> ShaderManager::_shaderPrograms;
 
 bool ShaderManager::Init()
 {
 	for (int i = 0; i < shaderCount; i++) {
-		if (_shaderPrograms.count(programNames[i]) == 0) {
-			_shaderPrograms.insert(std::make_pair(programNames[i], 
-				std::unique_ptr<ShaderProgram>(new ShaderProgram(programNames[i]))));
+		if (_shaderPrograms.count(shaderProgramNames[i]) == 0) {
+			ShaderProgram * shaderProgram = shaderProgramType[i] == THREE_D ?
+				new ShaderProgram3D(shaderProgramNames[i]) :
+				new ShaderProgram(shaderProgramNames[i]);
+			_shaderPrograms.insert(std::make_pair(shaderProgramNames[i], 
+				std::unique_ptr<ShaderProgram>(shaderProgram)));
 		}
-		auto shaderProgramItr = _shaderPrograms.find(programNames[i]);
+		auto shaderProgramItr = _shaderPrograms.find(shaderProgramNames[i]);
 		shaderProgramItr->second->add(std::unique_ptr<Shader>(new Shader(shaderNames[i], shaderText[i], shaderType[i])));
 	}
 

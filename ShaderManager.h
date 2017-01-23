@@ -33,11 +33,22 @@ public:
 	GLuint getAttributeLocation(std::string);
 	GLuint getUniformLocation(std::string);
 
-private:
+protected:
 	GLuint _id;
 	std::string _name;
 
 	std::map<std::string, std::unique_ptr<Shader>> _shaders;
+};
+
+class ShaderProgram3D : public ShaderProgram {
+public:
+	ShaderProgram3D(const char * name) : ShaderProgram(name) {};
+	void attachAndLink();
+
+protected:
+	GLuint _uniformIndex_modelMatrix = 0;
+	GLuint _uniformIndex_viewMatrix = 0;
+	GLuint _uniformIndex_projectionMatrix = 0;
 };
 
 class ShaderManager
