@@ -11,6 +11,7 @@ Shader::Shader(const char * name, const char * text, const int type)
 {
 	_name = name;
 	_id = glCreateShader(convertShaderType2GLuint(type));
+	cout << "Shader::Shader(" << _name << ":" << _id << ")" << endl;
 	if (_id <= 0)
 		throw new runtime_error("Invalid ID when trying to create shader");
 	glShaderSource(_id, 1, &text, NULL);
@@ -28,10 +29,10 @@ Shader::Shader(const char * name, const char * text, const int type)
 		errStr.append(errLog.begin(), errLog.end());
 		throw runtime_error(errStr);
 	}
-	cout << name << ":" << _id << endl;
 }
 
-GLuint Shader::convertShaderType2GLuint(const int shaderType) {
+GLuint Shader::convertShaderType2GLuint(const int shaderType) 
+{
 	switch (shaderType) {
 	case(FRAGMENT):
 		return GL_FRAGMENT_SHADER;
@@ -46,10 +47,102 @@ GLuint Shader::convertShaderType2GLuint(const int shaderType) {
 	}
 }
 
+ShaderProgram::ShaderProgram(const char * name)
+{
+	_name = name;
+	_id = glCreateProgram();
+	cout << "ShaderProgram::ShaderProgram(" << _name << ":" << _id << ")" << endl;
+}
+
+void ShaderProgram::add(unique_ptr<Shader> shader) {
+	_shaders.insert(make_pair(shader->getName(), std::move(shader)));
+}
+
+void ShaderProgram::attachAndLink()
+{
+	
+	cout << "ShaderProgram::AttachAndLink(" << _name << ")" << endl;
+	for (auto itr = _shaders.begin();
+		itr != _shaders.end(); 
+		itr++) {
+		glAttachShader(_id, itr->second->getId());
+	}
+	glLinkProgram(_id);
+	GLint isLinked;
+	glGetProgramiv(_id, GL_LINK_STATUS, &isLinked);
+	if (isLinked == GL_FALSE) {
+		GLint length;
+		glGetProgramiv(_id, GL_INFO_LOG_LENGTH, &length);
+		std::vector<GLchar> errLog(length);
+		glGetShaderInfoLog(_id, length, &length, &errLog[0]);
+		string errStr("Shader Program failed to link: ");
+		errStr.append(_name);
+		errStr += "\n";
+		errStr.append(errLog.begin(), errLog.end());
+		throw runtime_error(errStr);
+	}
+	GLint attr_count;
+	glGetProgramiv(_id, GL_ACTIVE_ATTRIBUTES,&attr_count);
+	cout << "Active attributs:" << attr_count << endl;
+	for (int i = 0; i < attr_count; i++) {
+		std::vector<GLchar> attrName(20);
+		glGetActiveAttrib(_id, i, attrName.size(), NULL, NULL, NULL, &attrName[0]);
+		cout << "    " << attrName.data() << endl;
+	}
+	GLint uni_count;
+	glGetProgramiv(_id, GL_ACTIVE_UNIFORMS, &uni_count);
+	cout << "Active uniforms:" << uni_count << endl;
+	for (int i = 0; i < uni_count; i++) {
+		std::vector<GLchar> uniName(20);
+		glGetActiveUniform(_id, i, uniName.size(), NULL, NULL, NULL, &uniName[0]);
+		cout << "    " << uniName.data() << endl;
+	}
+}
+
+GLuint ShaderProgram::getAttributeLocation(string name)
+{
+	auto loc = glGetAttribLocation(_id, name.c_str());
+	if (loc < 0) {
+		string errstr("No attribute ");
+		errstr += name;
+		errstr += " found in shader program ";
+		errstr += _name;
+		throw runtime_error(errstr);
+	}
+	return loc;
+}
+
+GLuint ShaderProgram::getUniformLocation(string name)
+{
+	auto loc = glGetUniformLocation(_id, name.c_str());
+	if (loc < 0) {
+		string errstr("No uniform ");
+		errstr += name;
+		errstr += " found in shader program ";
+		errstr += _name;
+		throw runtime_error(errstr);
+	}
+	return loc;
+}
+std::map<std::string, std::unique_ptr<ShaderProgram>> ShaderManager::_shaderPrograms;
+
 bool ShaderManager::Init()
 {
 	for (int i = 0; i < shaderCount; i++) {
-		auto shader = new Shader(shaderNames[i], shaderText[i], shaderType[i]);
+		if (_shaderPrograms.count(programNames[i]) == 0) {
+			_shaderPrograms.insert(std::make_pair(programNames[i], 
+				std::unique_ptr<ShaderProgram>(new ShaderProgram(programNames[i]))));
+		}
+		auto shaderProgramItr = _shaderPrograms.find(programNames[i]);
+		shaderProgramItr->second->add(std::unique_ptr<Shader>(new Shader(shaderNames[i], shaderText[i], shaderType[i])));
 	}
+
+	for (auto itr = _shaderPrograms.begin();
+		itr != _shaderPrograms.end();
+		itr++) {
+		itr->second->attachAndLink();
+
+	}
+
 	return true;
 }
