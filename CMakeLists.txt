@@ -11,6 +11,6 @@ if (WIN32)
 endif()
 find_package(glfw3 REQUIRED)
 
-ADD_EXECUTABLE(pixelnebula pixelnebula.cpp ShaderManager.h ShaderManager.cpp Shaders.h ${DEPS})
+ADD_EXECUTABLE(pixelnebula pixelnebula.cpp ShaderManager.h ShaderManager.cpp Shaders.h Perspective.h Perspective.cpp ${DEPS})
 target_link_libraries(pixelnebula glfw)
 target_include_directories(pixelnebula PUBLIC "${pixelnebula_SOURCE_DIR}/deps")
