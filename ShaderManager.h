@@ -7,6 +7,8 @@
 #include <map>
 #include <memory>
 
+#include <linmath.h>
+
 class Shader
 {
 public:
@@ -44,7 +46,10 @@ class ShaderProgram3D : public ShaderProgram {
 public:
 	ShaderProgram3D(const char * name) : ShaderProgram(name) {};
 	void attachAndLink();
-	void setViewMatrix();
+	void setModelMatrix(mat4x4);
+	void setViewMatrix(mat4x4);
+	void setProjectionMatrix(mat4x4);
+
 
 protected:
 	GLuint _uniformIndex_modelMatrix = 0;
@@ -57,7 +62,13 @@ class ShaderManager
 public:
 	ShaderManager() = delete;
 	static bool Init();
+	static void setShaderPrograms3DModelMatrix(mat4x4);
+	static void setShaderPrograms3DViewMatrix(mat4x4);
+	static void setShaderPrograms3DProjectionMatrix(mat4x4);
+	static ShaderProgram3D * getShaderProgram3D(std::string);
 
 private:
 	static std::map<std::string, std::unique_ptr<ShaderProgram>> _shaderPrograms;
+	static std::map<std::string, ShaderProgram3D *> _3DshaderPrograms;
+
 };

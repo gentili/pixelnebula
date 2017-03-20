@@ -29,5 +29,24 @@ private:
 	mat4x4 _viewMatrix;
 
 public:
-	Camera();
+	mat4x4 & asMatrix() { return _viewMatrix; }
+	void setRadius(float radius) { 
+		_radius = radius; 
+	}
+	void setUpVector(float x, float y, float z) {
+		_worldUpVector[0] = x;
+		_worldUpVector[1] = y;
+		_worldUpVector[2] = z;
+	}
+	void setTarget(float x, float y, float z) {
+		_target[0] = x;
+		_target[1] = y;
+		_target[2] = z;
+	}
+	void setPosition(float x, float y, float z) {
+		_position[0] = x;
+		_position[1] = y;
+		_position[2] = z;
+	}
+	void lookAtTarget();
 };

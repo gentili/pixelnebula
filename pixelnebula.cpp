@@ -8,11 +8,15 @@
 
 using namespace std;
 
-void abort(string msg) {
+void checkGLError() {
+	auto glError = glGetError();
+	if (glError != GL_NO_ERROR) {
+		throw runtime_error("GL Error");
+	}
 }
 
 int main(int argc, char ** argv) {
-    //  cout << "Initialddgizing..." << endl;
+    //  cout << "Initializing..." << endl;
 	const int width = 640;
 	const int height = 480;
 
@@ -36,13 +40,25 @@ int main(int argc, char ** argv) {
 			throw runtime_error("ShaderManager::Init() failed");
 
 		Projection projection;
-		Camera camera;
 		float aspect = (float) width / (float) height;
 		projection.fromPerspective(60.0f, aspect, 0.1f, 10.0f);
 		ShaderManager::setShaderPrograms3DProjectionMatrix(projection.asMatrix());
 
+		Camera camera;
+		// camera.setRadius(4.5f);
+		camera.setUpVector(0, 1, 0);
+		camera.setTarget(0, 0, 0);
+		camera.setPosition(0, 0, -4.5f);
+		camera.lookAtTarget();
+
+		GLuint vaoId;
+		glGenVertexArrays(1, &vaoId);
+		glBindVertexArray(vaoId);
 		while (!glfwWindowShouldClose(window))
 		{
+			checkGLError();
+
+			ShaderManager::setShaderPrograms3DViewMatrix(camera.asMatrix());
 			glfwSwapBuffers(window);
 			glfwPollEvents();
 		}

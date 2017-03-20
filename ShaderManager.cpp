@@ -133,21 +133,41 @@ void ShaderProgram3D::attachAndLink()
 	_uniformIndex_projectionMatrix = getUniformLocation("projectionMatrix");
 }
 
-void ShaderProgram3D::setViewMatrix()
+void ShaderProgram3D::setModelMatrix(mat4x4 modelMatrix)
 {
-	//glUseProgram(_id);
-	//glUniformMatrix4fv(_uniformIndex_viewMatrix,1,true,)
+	glUseProgram(_id);
+	glUniformMatrix4fv(_uniformIndex_projectionMatrix, 1, true, *modelMatrix);
+}
+
+void ShaderProgram3D::setViewMatrix(mat4x4 modelMatrix)
+{
+	glUseProgram(_id);
+	glUniformMatrix4fv(_uniformIndex_projectionMatrix, 1, true, *modelMatrix);
+}
+
+void ShaderProgram3D::setProjectionMatrix(mat4x4 projectionMatrix)
+{
+	glUseProgram(_id);
+	glUniformMatrix4fv(_uniformIndex_projectionMatrix, 1, true, *projectionMatrix);
 }
 
 std::map<std::string, std::unique_ptr<ShaderProgram>> ShaderManager::_shaderPrograms;
+std::map<std::string, ShaderProgram3D *> ShaderManager::_3DshaderPrograms;
 
 bool ShaderManager::Init()
 {
 	for (int i = 0; i < shaderCount; i++) {
 		if (_shaderPrograms.count(shaderProgramNames[i]) == 0) {
-			ShaderProgram * shaderProgram = shaderProgramType[i] == THREE_D ?
-				new ShaderProgram3D(shaderProgramNames[i]) :
-				new ShaderProgram(shaderProgramNames[i]);
+			ShaderProgram * shaderProgram;
+			if (shaderProgramType[i] == THREE_D) {
+				auto shaderProgram3D = new ShaderProgram3D(shaderProgramNames[i]);
+				_3DshaderPrograms.insert(std::make_pair(shaderProgramNames[i],
+					shaderProgram3D));
+				shaderProgram = shaderProgram3D;
+			}
+			else {
+				shaderProgram = new ShaderProgram(shaderProgramNames[i]);
+			}
 			_shaderPrograms.insert(std::make_pair(shaderProgramNames[i], 
 				std::unique_ptr<ShaderProgram>(shaderProgram)));
 		}
@@ -157,10 +177,46 @@ bool ShaderManager::Init()
 
 	for (auto itr = _shaderPrograms.begin();
 		itr != _shaderPrograms.end();
-		itr++) {
+		itr++)
 		itr->second->attachAndLink();
 
-	}
-
 	return true;
+}
+
+void ShaderManager::setShaderPrograms3DModelMatrix(mat4x4 modelMatrix)
+{
+	for (auto itr = _3DshaderPrograms.begin();
+		itr != _3DshaderPrograms.end();
+		itr++) {
+		itr->second->setModelMatrix(modelMatrix);
+	}
+}
+
+void ShaderManager::setShaderPrograms3DViewMatrix(mat4x4 viewMatrix)
+{
+	for (auto itr = _3DshaderPrograms.begin();
+		itr != _3DshaderPrograms.end();
+		itr++) {
+		itr->second->setModelMatrix(viewMatrix);
+	}
+}
+
+void ShaderManager::setShaderPrograms3DProjectionMatrix(mat4x4 projectionMatrix)
+{
+	for (auto itr = _3DshaderPrograms.begin();
+		itr != _3DshaderPrograms.end();
+		itr++) {
+		itr->second->setModelMatrix(projectionMatrix);
+	}
+}
+
+ShaderProgram3D * ShaderManager::getShaderProgram3D(string name) 
+{
+	auto itr = _3DshaderPrograms.find(name);
+	if (itr == _3DshaderPrograms.end()) {
+		string errstr("No such shader ");
+		errstr += name;
+		throw runtime_error(errstr);
+	}
+	return itr->second;
 }
