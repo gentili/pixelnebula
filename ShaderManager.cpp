@@ -151,7 +151,7 @@ void ShaderProgram3D::setProjectionMatrix(mat4x4 projectionMatrix)
 	glUniformMatrix4fv(_uniformIndex_projectionMatrix, 1, true, *projectionMatrix);
 }
 
-std::map<std::string, std::unique_ptr<ShaderProgram>> ShaderManager::_shaderPrograms;
+std::map<std::string, std::unique_ptr<ShaderProgram> > ShaderManager::_shaderPrograms;
 std::map<std::string, ShaderProgram3D *> ShaderManager::_3DshaderPrograms;
 
 bool ShaderManager::Init()

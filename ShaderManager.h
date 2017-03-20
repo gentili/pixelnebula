@@ -39,7 +39,7 @@ protected:
 	GLuint _id;
 	std::string _name;
 
-	std::map<std::string, std::unique_ptr<Shader>> _shaders;
+	std::map<std::string, std::unique_ptr<Shader> > _shaders;
 };
 
 class ShaderProgram3D : public ShaderProgram {
@@ -68,7 +68,7 @@ public:
 	static ShaderProgram3D * getShaderProgram3D(std::string);
 
 private:
-	static std::map<std::string, std::unique_ptr<ShaderProgram>> _shaderPrograms;
+	static std::map<std::string, std::unique_ptr<ShaderProgram> > _shaderPrograms;
 	static std::map<std::string, ShaderProgram3D *> _3DshaderPrograms;
 
 };
