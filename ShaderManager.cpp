@@ -136,13 +136,13 @@ void ShaderProgram3D::attachAndLink()
 void ShaderProgram3D::setModelMatrix(mat4x4 modelMatrix)
 {
 	glUseProgram(_id);
-	glUniformMatrix4fv(_uniformIndex_projectionMatrix, 1, true, *modelMatrix);
+	glUniformMatrix4fv(_uniformIndex_modelMatrix, 1, true, *modelMatrix);
 }
 
-void ShaderProgram3D::setViewMatrix(mat4x4 modelMatrix)
+void ShaderProgram3D::setViewMatrix(mat4x4 viewMatrix)
 {
 	glUseProgram(_id);
-	glUniformMatrix4fv(_uniformIndex_projectionMatrix, 1, true, *modelMatrix);
+	glUniformMatrix4fv(_uniformIndex_viewMatrix, 1, true, *viewMatrix);
 }
 
 void ShaderProgram3D::setProjectionMatrix(mat4x4 projectionMatrix)
@@ -197,7 +197,7 @@ void ShaderManager::setShaderPrograms3DViewMatrix(mat4x4 viewMatrix)
 	for (auto itr = _3DshaderPrograms.begin();
 		itr != _3DshaderPrograms.end();
 		itr++) {
-		itr->second->setModelMatrix(viewMatrix);
+		itr->second->setViewMatrix(viewMatrix);
 	}
 }
 
@@ -206,7 +206,7 @@ void ShaderManager::setShaderPrograms3DProjectionMatrix(mat4x4 projectionMatrix)
 	for (auto itr = _3DshaderPrograms.begin();
 		itr != _3DshaderPrograms.end();
 		itr++) {
-		itr->second->setModelMatrix(projectionMatrix);
+		itr->second->setProjectionMatrix(projectionMatrix);
 	}
 }
 
