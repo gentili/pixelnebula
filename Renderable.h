@@ -17,12 +17,16 @@ protected:
 
 	mat4x4 _modelMatrix;
 public:
-	Renderable(std::string shaderProgramName) {
-		if (_shaderProgram == nullptr) {
-			_shaderProgram = ShaderManager::getShaderProgram3D(shaderProgramName);
-		}
-		GLuint _vertexAttrIndex_pos = _shaderProgram->getAttributeLocation("pos");
-		GLuint _vertexAttrIndex_color = _shaderProgram->getAttributeLocation("color");
-	};
+	Renderable(std::string shaderProgramName) { 
+            _shaderProgram = ShaderManager::getShaderProgram3D(shaderProgramName);
+            mat4x4_identity(_modelMatrix);
+	}
 
+        void setTranslation(float x, float y, float z) {
+            _position[0] = x;
+            _position[1] = y;
+            _position[2] = z;
+        }
+
+        virtual void draw() = 0;
 };

@@ -83,19 +83,19 @@ void ShaderProgram::attachAndLink()
 	}
 	GLint attr_count;
 	glGetProgramiv(_id, GL_ACTIVE_ATTRIBUTES,&attr_count);
-	cout << "Active attributs:" << attr_count << endl;
+	cout << "\tActive attributs:" << attr_count << endl;
 	for (int i = 0; i < attr_count; i++) {
 		std::vector<GLchar> attrName(20);
 		glGetActiveAttrib(_id, i, (GLsizei) attrName.size(), NULL, NULL, NULL, &attrName[0]);
-		cout << "    " << attrName.data() << endl;
+		cout << "\t\t" << attrName.data() << endl;
 	}
 	GLint uni_count;
 	glGetProgramiv(_id, GL_ACTIVE_UNIFORMS, &uni_count);
-	cout << "Active uniforms:" << uni_count << endl;
+	cout << "\tActive uniforms:" << uni_count << endl;
 	for (int i = 0; i < uni_count; i++) {
 		std::vector<GLchar> uniName(20);
 		glGetActiveUniform(_id, i, (GLsizei) uniName.size(), NULL, NULL, NULL, &uniName[0]);
-		cout << "    " << uniName.data() << endl;
+		cout << "\t\t" << uniName.data() << endl;
 	}
 }
 
@@ -136,19 +136,19 @@ void ShaderProgram3D::attachAndLink()
 void ShaderProgram3D::setModelMatrix(mat4x4 modelMatrix)
 {
 	glUseProgram(_id);
-	glUniformMatrix4fv(_uniformIndex_modelMatrix, 1, true, *modelMatrix);
+	glUniformMatrix4fv(_uniformIndex_modelMatrix, 1, GL_FALSE, (const GLfloat *) modelMatrix);
 }
 
 void ShaderProgram3D::setViewMatrix(mat4x4 viewMatrix)
 {
 	glUseProgram(_id);
-	glUniformMatrix4fv(_uniformIndex_viewMatrix, 1, true, *viewMatrix);
+	glUniformMatrix4fv(_uniformIndex_viewMatrix, 1, GL_FALSE, (const GLfloat *) viewMatrix);
 }
 
 void ShaderProgram3D::setProjectionMatrix(mat4x4 projectionMatrix)
 {
 	glUseProgram(_id);
-	glUniformMatrix4fv(_uniformIndex_projectionMatrix, 1, true, *projectionMatrix);
+	glUniformMatrix4fv(_uniformIndex_projectionMatrix, 1, GL_FALSE, (const GLfloat *) projectionMatrix);
 }
 
 std::map<std::string, std::unique_ptr<ShaderProgram> > ShaderManager::_shaderPrograms;

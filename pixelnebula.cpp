@@ -5,15 +5,10 @@
 #include <linmath.h>
 #include "ShaderManager.h"
 #include "Perspective.h"
+#include "Axis.h"
+#include "utils.h"
 
 using namespace std;
-
-void checkGLError() {
-	auto glError = glGetError();
-	if (glError != GL_NO_ERROR) {
-		throw runtime_error("GL Error");
-	}
-}
 
 int main(int argc, char ** argv) {
     //  cout << "Initializing..." << endl;
@@ -41,7 +36,7 @@ int main(int argc, char ** argv) {
 
 		Projection projection;
 		float aspect = (float) width / (float) height;
-		projection.fromPerspective(60.0f, aspect, 0.1f, 10.0f);
+		projection.fromPerspective(1.0472f, aspect, 0.1f, 10.0f); // 60 degrees
 		ShaderManager::setShaderPrograms3DProjectionMatrix(projection.asMatrix());
 
 		Camera camera;
@@ -51,6 +46,9 @@ int main(int argc, char ** argv) {
 		camera.setPosition(0, 0, -4.5f);
 		camera.lookAtTarget();
 
+                Axis axis;
+                axis.setTranslation(0,0,0);
+
 		GLuint vaoId;
 		glGenVertexArrays(1, &vaoId);
 		glBindVertexArray(vaoId);
@@ -59,6 +57,12 @@ int main(int argc, char ** argv) {
 			checkGLError();
 
 			ShaderManager::setShaderPrograms3DViewMatrix(camera.asMatrix());
+
+                        glViewport(0,0,width,height);
+                        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+                        axis.draw();
+
 			glfwSwapBuffers(window);
 			glfwPollEvents();
 		}
