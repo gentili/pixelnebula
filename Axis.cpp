@@ -21,11 +21,11 @@ GLfloat vbpos[] = {
 
 GLfloat vbcolor[] = {
     0.1,0,0,1,
-    1,0,0,1, // X Axis RED
+      1,0,0,1, // X Axis RED
     0,0.1,0,1,
-    0,1,0,1, // Y Axis GREEN
+    0,  1,0,1, // Y Axis GREEN
     0,0,0.1,1,
-    0,0,1,1  // Z Axis BLUE
+    0,0,  1,1  // Z Axis BLUE
 };
 
 GLuint Axis::_vertexAttrIndex_pos;
