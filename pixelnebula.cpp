@@ -10,6 +10,16 @@
 
 using namespace std;
 
+void APIENTRY debugCallBack(GLenum source,
+	GLenum type,
+	GLuint id,
+	GLenum severity,
+	GLsizei length,
+	const GLchar *msg,
+	const void *data) {
+	cout << "GL_DEBUG: " << msg << endl;
+}
+
 int main(int argc, char ** argv) {
     //  cout << "Initializing..." << endl;
 	const int width = 640;
@@ -21,6 +31,7 @@ int main(int argc, char ** argv) {
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		GLFWwindow* window = glfwCreateWindow(width, height, "PixelNebula", NULL, NULL);
@@ -30,6 +41,28 @@ int main(int argc, char ** argv) {
 		glfwMakeContextCurrent(window);
 		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		glfwSwapInterval(1);
+
+		GLint v;
+		glGetIntegerv(GL_CONTEXT_FLAGS, &v);
+		if (v & GL_CONTEXT_FLAG_DEBUG_BIT) {
+			cout << "Debug Callback Enabled" << endl;
+			glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+			glDebugMessageCallback(debugCallBack, nullptr);
+			GLuint noIds = 0;
+			glDebugMessageControl(GL_DONT_CARE,
+				GL_DONT_CARE,
+				GL_DONT_CARE,
+				0,
+				&noIds,
+				true);
+			string msg = "GL Debug Facility seems to be working";
+			glDebugMessageInsert(GL_DEBUG_SOURCE_APPLICATION,
+				GL_DEBUG_TYPE_OTHER,
+				0,
+				GL_DEBUG_SEVERITY_NOTIFICATION,
+				msg.length(),
+				msg.c_str());
+		}
 
 		if (!ShaderManager::Init())
 			throw runtime_error("ShaderManager::Init() failed");
