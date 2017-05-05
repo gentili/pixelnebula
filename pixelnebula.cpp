@@ -22,8 +22,6 @@ void APIENTRY debugCallBack(GLenum source,
 
 int main(int argc, char ** argv) {
     //  cout << "Initializing..." << endl;
-	const int width = 640;
-	const int height = 480;
 
 	try {
 		if (!glfwInit())
@@ -34,13 +32,18 @@ int main(int argc, char ** argv) {
 		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		GLFWwindow* window = glfwCreateWindow(width, height, "PixelNebula", NULL, NULL);
+		GLFWwindow* window = glfwCreateWindow(640, 480, "PixelNebula", NULL, NULL);
 		if (!window)
 			throw runtime_error("glfwCreateWindow failed");
 
 		glfwMakeContextCurrent(window);
 		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		glfwSwapInterval(1);
+
+                int width, height;
+                glfwGetFramebufferSize(window,&width,&height);
+
+                cout << "Window size " << width << "x" << height << endl;
 
 		GLint v;
 		glGetIntegerv(GL_CONTEXT_FLAGS, &v);
@@ -92,6 +95,7 @@ int main(int argc, char ** argv) {
 			ShaderManager::setShaderPrograms3DViewMatrix(camera.asMatrix());
 
                         glViewport(0,0,width,height);
+                        glScissor(0,0,width,height);
                         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
                         axis.draw();

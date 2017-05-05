@@ -26,6 +26,7 @@ public:
             _position[0] = x;
             _position[1] = y;
             _position[2] = z;
+            mat4x4_translate(_modelMatrix,x,y,z);
         }
 
         virtual void draw() = 0;

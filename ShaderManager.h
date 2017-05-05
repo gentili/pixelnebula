@@ -31,7 +31,7 @@ public:
 
 	GLuint getId() { return _id; }
 	void add(std::unique_ptr<Shader>);
-	void attachAndLink();
+	virtual void attachAndLink();
 	GLuint getAttributeLocation(std::string);
 	GLuint getUniformLocation(std::string);
 
@@ -45,7 +45,7 @@ protected:
 class ShaderProgram3D : public ShaderProgram {
 public:
 	ShaderProgram3D(const char * name) : ShaderProgram(name) {};
-	void attachAndLink();
+	virtual void attachAndLink();
 	void setModelMatrix(mat4x4);
 	void setViewMatrix(mat4x4);
 	void setProjectionMatrix(mat4x4);
