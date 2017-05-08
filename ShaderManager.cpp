@@ -214,8 +214,9 @@ ShaderProgram3D * ShaderManager::getShaderProgram3D(string name)
 {
 	auto itr = _3DshaderPrograms.find(name);
 	if (itr == _3DshaderPrograms.end()) {
-		string errstr("No such shader ");
+		string errstr("No such shader '");
 		errstr += name;
+                errstr += "'";
 		throw runtime_error(errstr);
 	}
 	return itr->second;

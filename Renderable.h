@@ -18,11 +18,12 @@ protected:
 	mat4x4 _modelMatrix;
 
         vec4 _color;
-public:
+
 	Renderable(std::string shaderProgramName) { 
             _shaderProgram = ShaderManager::getShaderProgram3D(shaderProgramName);
             mat4x4_identity(_modelMatrix);
 	}
+public:
 
         void setTranslation(float x, float y, float z) {
             _position[0] = x;

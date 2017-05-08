@@ -7,6 +7,7 @@
 #include "Perspective.h"
 #include "Axis.h"
 #include "DoublePointStar.h"
+#include "GlowSphere.h"
 #include "utils.h"
 
 using namespace std;
@@ -89,6 +90,10 @@ int main(int argc, char ** argv) {
                 ps.setTranslation((vec3){0,0,0});
                 ps.setColor((vec4){0,0,0.05,0});
 
+                GlowSphere gs(1);
+                gs.setTranslation((vec3){0,0,0});
+                gs.setColor((vec4){0,0,0.5,0});
+
 		GLuint vaoId;
 		glGenVertexArrays(1, &vaoId);
 		glBindVertexArray(vaoId);
@@ -107,7 +112,8 @@ int main(int argc, char ** argv) {
                         glBlendFunc(GL_ONE,GL_ONE);
                         glBlendEquation(GL_FUNC_ADD);
 
-                        ps.draw();
+                        //ps.draw();
+                        gs.draw();
                         axis.draw();
 
 			glfwSwapBuffers(window);
