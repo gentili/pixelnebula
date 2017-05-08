@@ -10,7 +10,15 @@ if (WIN32)
 endif()
 find_package(glfw3 REQUIRED)
 
-ADD_EXECUTABLE(pixelnebula pixelnebula.cpp utils.h utils.cpp ShaderManager.h ShaderManager.cpp Shaders.h Perspective.h Perspective.cpp Renderable.h Renderable.cpp Axis.h Axis.cpp ${DEPS})
+ADD_EXECUTABLE(pixelnebula pixelnebula.cpp 
+    utils.h utils.cpp 
+    ShaderManager.h ShaderManager.cpp 
+    Shaders.h 
+    Perspective.h Perspective.cpp 
+    Renderable.h Renderable.cpp 
+    Axis.h Axis.cpp 
+    PointStar.h PointStar.cpp
+    ${DEPS})
 set_property(TARGET pixelnebula PROPERTY CXX_STANDARD 11)
 target_link_libraries(pixelnebula glfw)
 target_include_directories(pixelnebula PUBLIC "${pixelnebula_SOURCE_DIR}/deps")

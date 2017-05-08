@@ -16,6 +16,8 @@ protected:
 	vec3 _scale;
 
 	mat4x4 _modelMatrix;
+
+        vec4 _color;
 public:
 	Renderable(std::string shaderProgramName) { 
             _shaderProgram = ShaderManager::getShaderProgram3D(shaderProgramName);
@@ -30,4 +32,11 @@ public:
         }
 
         virtual void draw() = 0;
+
+        void setColor(vec4 c) {
+            _color[0] = c[0];
+            _color[1] = c[1];
+            _color[2] = c[2];
+            _color[3] = c[3];
+        }
 };

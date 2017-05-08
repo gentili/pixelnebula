@@ -6,6 +6,7 @@
 #include "ShaderManager.h"
 #include "Perspective.h"
 #include "Axis.h"
+#include "PointStar.h"
 #include "utils.h"
 
 using namespace std;
@@ -22,7 +23,6 @@ void APIENTRY debugCallBack(GLenum source,
 
 int main(int argc, char ** argv) {
     //  cout << "Initializing..." << endl;
-
 	try {
 		if (!glfwInit())
 			throw runtime_error("glfwInit() failed");
@@ -77,13 +77,17 @@ int main(int argc, char ** argv) {
 
 		Camera camera;
 		// camera.setRadius(4.5f);
-		camera.setUpVector(0, 1, 0);
+		camera.setUpVector(0, -1, 0);
 		camera.setTarget(0, 0, 0);
 		camera.setPosition(0, 0, -4.5f);
 		camera.lookAtTarget();
 
                 Axis axis;
                 axis.setTranslation(0,0,0);
+
+                PointStar ps(1.0);
+                ps.setTranslation(0,0,0);
+                ps.setColor((vec4){0,0,0.05,0});
 
 		GLuint vaoId;
 		glGenVertexArrays(1, &vaoId);
@@ -98,6 +102,12 @@ int main(int argc, char ** argv) {
                         glScissor(0,0,width,height);
                         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+                        glEnable(GL_BLEND);
+                        glDisable(GL_DEPTH_TEST);
+                        glBlendFunc(GL_ONE,GL_ONE);
+                        glBlendEquation(GL_FUNC_ADD);
+
+                        ps.draw();
                         axis.draw();
 
 			glfwSwapBuffers(window);
