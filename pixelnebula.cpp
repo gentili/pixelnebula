@@ -6,7 +6,7 @@
 #include "ShaderManager.h"
 #include "Perspective.h"
 #include "Axis.h"
-#include "PointStar.h"
+#include "DoublePointStar.h"
 #include "utils.h"
 
 using namespace std;
@@ -85,8 +85,8 @@ int main(int argc, char ** argv) {
                 Axis axis;
                 axis.setTranslation(0,0,0);
 
-                PointStar ps(1.0);
-                ps.setTranslation(0,0,0);
+                DoublePointStar ps(0.5);
+                ps.setTranslation((vec3){0,0,0});
                 ps.setColor((vec4){0,0,0.05,0});
 
 		GLuint vaoId;

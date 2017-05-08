@@ -18,6 +18,7 @@ ADD_EXECUTABLE(pixelnebula pixelnebula.cpp
     Renderable.h Renderable.cpp 
     Axis.h Axis.cpp 
     PointStar.h PointStar.cpp
+    DoublePointStar.h
     ${DEPS})
 set_property(TARGET pixelnebula PROPERTY CXX_STANDARD 11)
 target_link_libraries(pixelnebula glfw)

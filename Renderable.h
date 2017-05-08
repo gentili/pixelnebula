@@ -31,6 +31,12 @@ public:
             mat4x4_translate(_modelMatrix,x,y,z);
         }
 
+        void setTranslation(vec3 v) {
+            _position[0] = v[0];
+            _position[1] = v[1];
+            _position[2] = v[2];
+        }
+
         virtual void draw() = 0;
 
         void setColor(vec4 c) {
