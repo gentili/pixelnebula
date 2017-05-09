@@ -79,10 +79,9 @@ int main(int argc, char ** argv) {
 		ShaderManager::setShaderPrograms3DProjectionMatrix(projection.asMatrix());
 
 		Camera camera;
-		// camera.setRadius(4.5f);
 		camera.setUpVector(0, -1, 0);
 		camera.setTarget(0, 0, 0);
-		camera.setPosition(0, 0, 4.5f);
+		camera.setRadius(4.5);
 		camera.lookAtTarget();
 
                 Axis axis;
@@ -108,6 +107,8 @@ int main(int argc, char ** argv) {
                         glBlendFunc(GL_ONE,GL_ONE);
                         glBlendEquation(GL_FUNC_ADD);
 
+                        camera.addRotation(0.005);
+		        camera.lookAtTarget();
                         nebula.draw();
                         axis.draw();
 
