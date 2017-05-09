@@ -28,7 +28,7 @@ protected:
             mat4x4_translate(_modelMatrix,
                     _position[0],
                     _position[1],
-                    _position[0]);
+                    _position[2]);
         }
 public:
 
