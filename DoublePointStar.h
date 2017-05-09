@@ -20,9 +20,17 @@ public:
         _innerPointStar.setColor(tc);
     }
 
+    void setColor(float r, float g, float b, float a) {
+        setColor((vec4){r,g,b,a});
+    }
+
     void setTranslation(vec3 v) {
         _outterPointStar.setTranslation(v);
         _innerPointStar.setTranslation(v);
+    }
+
+    float * getTranslation() {
+        return _outterPointStar.getTranslation();
     }
 
     void draw() {

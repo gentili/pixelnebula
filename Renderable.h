@@ -23,19 +23,31 @@ protected:
             _shaderProgram = ShaderManager::getShaderProgram3D(shaderProgramName);
             mat4x4_identity(_modelMatrix);
 	}
+
+        void updateModelMatrix() {
+            mat4x4_translate(_modelMatrix,
+                    _position[0],
+                    _position[1],
+                    _position[0]);
+        }
 public:
 
         void setTranslation(float x, float y, float z) {
             _position[0] = x;
             _position[1] = y;
             _position[2] = z;
-            mat4x4_translate(_modelMatrix,x,y,z);
+            updateModelMatrix();
         }
 
         void setTranslation(vec3 v) {
             _position[0] = v[0];
             _position[1] = v[1];
             _position[2] = v[2];
+            updateModelMatrix();
+        }
+        
+        float* getTranslation() {
+            return _position;
         }
 
         virtual void draw() = 0;
@@ -45,5 +57,12 @@ public:
             _color[1] = c[1];
             _color[2] = c[2];
             _color[3] = c[3];
+        }
+
+        void setColor(float r, float g, float b, float a) {
+            _color[0] = r;
+            _color[1] = g;
+            _color[2] = b;
+            _color[3] = a;
         }
 };

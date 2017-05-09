@@ -8,6 +8,7 @@
 #include "Axis.h"
 #include "DoublePointStar.h"
 #include "GlowSphere.h"
+#include "Nebula.h"
 #include "utils.h"
 
 using namespace std;
@@ -94,6 +95,8 @@ int main(int argc, char ** argv) {
                 gs.setTranslation((vec3){0,0,0});
                 gs.setColor((vec4){0,0,0.5,0});
 
+                Nebula nebula;
+
 		GLuint vaoId;
 		glGenVertexArrays(1, &vaoId);
 		glBindVertexArray(vaoId);
@@ -113,7 +116,8 @@ int main(int argc, char ** argv) {
                         glBlendEquation(GL_FUNC_ADD);
 
                         //ps.draw();
-                        gs.draw();
+                        //gs.draw();
+                        nebula.draw();
                         axis.draw();
 
 			glfwSwapBuffers(window);
