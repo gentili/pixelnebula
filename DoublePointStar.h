@@ -24,6 +24,10 @@ public:
         setColor((vec4){r,g,b,a});
     }
 
+    float * getColor() {
+        return _outterPointStar.getColor();
+    }
+
     void setTranslation(vec3 v) {
         _outterPointStar.setTranslation(v);
         _innerPointStar.setTranslation(v);

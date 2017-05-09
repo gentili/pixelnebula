@@ -2,12 +2,12 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <cstdlib>
+
 #include <linmath.h>
-#include "ShaderManager.h"
+
 #include "Perspective.h"
 #include "Axis.h"
-#include "DoublePointStar.h"
-#include "GlowSphere.h"
 #include "Nebula.h"
 #include "utils.h"
 
@@ -25,6 +25,7 @@ void APIENTRY debugCallBack(GLenum source,
 
 int main(int argc, char ** argv) {
     //  cout << "Initializing..." << endl;
+        srand(static_cast<unsigned> (time(0))); 
 	try {
 		if (!glfwInit())
 			throw runtime_error("glfwInit() failed");
@@ -34,7 +35,7 @@ int main(int argc, char ** argv) {
 		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		GLFWwindow* window = glfwCreateWindow(640, 480, "PixelNebula", NULL, NULL);
+		GLFWwindow* window = glfwCreateWindow(1024, 768, "PixelNebula", NULL, NULL);
 		if (!window)
 			throw runtime_error("glfwCreateWindow failed");
 
@@ -81,19 +82,11 @@ int main(int argc, char ** argv) {
 		// camera.setRadius(4.5f);
 		camera.setUpVector(0, -1, 0);
 		camera.setTarget(0, 0, 0);
-		camera.setPosition(0, 0, -4.5f);
+		camera.setPosition(0, 0, 4.5f);
 		camera.lookAtTarget();
 
                 Axis axis;
                 axis.setTranslation(0,0,0);
-
-                DoublePointStar ps(0.5);
-                ps.setTranslation((vec3){0,0,0});
-                ps.setColor((vec4){0,0,0.05,0});
-
-                GlowSphere gs(1);
-                gs.setTranslation((vec3){0,0,0});
-                gs.setColor((vec4){0,0,0.5,0});
 
                 Nebula nebula;
 
@@ -115,8 +108,6 @@ int main(int argc, char ** argv) {
                         glBlendFunc(GL_ONE,GL_ONE);
                         glBlendEquation(GL_FUNC_ADD);
 
-                        //ps.draw();
-                        //gs.draw();
                         nebula.draw();
                         axis.draw();
 

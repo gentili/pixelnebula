@@ -65,4 +65,8 @@ public:
             _color[2] = b;
             _color[3] = a;
         }
+
+        float* getColor() {
+            return _color;
+        }
 };

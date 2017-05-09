@@ -4,7 +4,7 @@
 #include "utils.h"
 
 GlowSphere::GlowSphere(float scale) 
-    : Renderable("glowSphere"), _indexCount(0) {
+    : Renderable("glowSphere"), _indexCount(0), _scale(scale) {
     _vertexAttrIndex_pos = _shaderProgram->getAttributeLocation("pos");
     _uniformIndex_color = _shaderProgram->getUniformLocation("color");
 

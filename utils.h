@@ -1,14 +1,8 @@
 #pragma once
 
+#include<cstdlib>
+
 #include "deps/linmath.h"
-
-void checkGLError();
-
-void dumpmat(mat4x4 m);
-
-void dumpvec(vec3 v);
-
-void dumpquat(quat q);
 
 class vec3f {
     public:
@@ -28,3 +22,15 @@ class vec3f {
             return *this;
         }
 };
+
+void checkGLError();
+
+void dumpmat(mat4x4 m);
+
+void dumpvec(vec3 v);
+
+void dumpquat(quat q);
+
+float randfloat();
+
+float vec3_distance(vec3, vec3);

@@ -22,6 +22,14 @@ private:
 
     void setColor(GlowSphere *);
 
+    void grow();
+
+    void newStar();
+
+    void newCloud();
+
+    bool isTouching(vec3);
+
 public:
     Nebula();
 
