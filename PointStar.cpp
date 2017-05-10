@@ -1,6 +1,8 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include "PointStar.h"
 #include "utils.h"
-#include <cmath>
 
 PointStar::PointStar(float scale) : Renderable("concursionPoint") {
     _vertexAttrIndex_pos = _shaderProgram->getAttributeLocation("pos");
@@ -27,13 +29,13 @@ PointStar::PointStar(float scale) : Renderable("concursionPoint") {
     quat_rotate(zeroQ,0,unitZ);
 
     quat halfpiQ;
-    quat_rotate(halfpiQ,M_PI_2,unitZ);
+    quat_rotate(halfpiQ,(float)M_PI_2,unitZ);
 
     quat piQ;
-    quat_rotate(piQ,M_PI,unitZ);
+    quat_rotate(piQ,(float)M_PI,unitZ);
 
     quat minushalfpiQ;
-    quat_rotate(minushalfpiQ,-M_PI_2,unitZ);
+    quat_rotate(minushalfpiQ,(float)-M_PI_2,unitZ);
 
     std::vector<vec3f> vertexArray;
     std::vector<int> indexArray;

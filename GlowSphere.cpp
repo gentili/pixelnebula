@@ -14,39 +14,39 @@ GlowSphere::GlowSphere(float scale)
     std::vector<int> indexArray;
 
     // First half
-    v.x = -0.5*scale;
-    v.y = 0.5*scale;
+    v.x = -0.5f*scale;
+    v.y = 0.5f*scale;
     v.z = 0;
     vertexArray.push_back(v);
     indexArray.push_back(_indexCount++);
 
-    v.x = 0.5*scale;
-    v.y = 0.5*scale;
+    v.x = 0.5f*scale;
+    v.y = 0.5f*scale;
     v.z = 0;
     vertexArray.push_back(v);
     indexArray.push_back(_indexCount++);
 
-    v.x = 0.5*scale;
-    v.y = -0.5*scale;
+    v.x = 0.5f*scale;
+    v.y = -0.5f*scale;
     v.z = 0;
     vertexArray.push_back(v);
     indexArray.push_back(_indexCount++);
 
     // Second half
-    v.x = -0.5*scale;
-    v.y = 0.5*scale;
+    v.x = -0.5f*scale;
+    v.y = 0.5f*scale;
     v.z = 0;
     vertexArray.push_back(v);
     indexArray.push_back(_indexCount++);
 
-    v.x = -0.5*scale;
-    v.y = -0.5*scale;
+    v.x = -0.5f*scale;
+    v.y = -0.5f*scale;
     v.z = 0;
     vertexArray.push_back(v);
     indexArray.push_back(_indexCount++);
 
-    v.x = 0.5*scale;
-    v.y = -0.5*scale;
+    v.x = 0.5f*scale;
+    v.y = -0.5f*scale;
     v.z = 0;
     vertexArray.push_back(v);
     indexArray.push_back(_indexCount++);

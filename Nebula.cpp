@@ -15,10 +15,10 @@ Nebula::Nebula() {
     gs->setTranslation(v);
     setColor(gs);
     vec4_norm(gs->getColor(),gs->getColor());
-    vec4_scale(gs->getColor(),gs->getColor(),0.2);
+    vec4_scale(gs->getColor(),gs->getColor(),0.2f);
     _gsarray.push_back(gs);
 
-    DoublePointStar* dps = new DoublePointStar(0.2);
+    DoublePointStar* dps = new DoublePointStar(0.2f);
     dps->setTranslation(v);
     setColor(dps);
     _dpsarray.push_back(dps);
@@ -29,10 +29,10 @@ Nebula::Nebula() {
     gs->setTranslation(v);
     setColor(gs);
     vec4_norm(gs->getColor(),gs->getColor());
-    vec4_scale(gs->getColor(),gs->getColor(),0.2);
+    vec4_scale(gs->getColor(),gs->getColor(),0.2f);
     _gsarray.push_back(gs);
 
-    dps = new DoublePointStar(0.2);
+    dps = new DoublePointStar(0.2f);
     dps->setTranslation(v);
     setColor(dps);
     _dpsarray.push_back(dps);
@@ -41,14 +41,14 @@ Nebula::Nebula() {
 void Nebula::setColor(DoublePointStar * dps) {
     float* v = (dps->getTranslation());
     float red = (CONTAINER_RADIUS + v[1])/(2*CONTAINER_RADIUS);
-    float mag = 0.1;
+    float mag = 0.1f;
     dps->setColor(red*mag, 0, mag, 0);
 }
 
 void Nebula::setColor(GlowSphere * gs) {
     float* v = (gs->getTranslation());
     float red = (CONTAINER_RADIUS + v[1])/(2*CONTAINER_RADIUS);
-    float mag = 0.05;
+    float mag = 0.05f;
     gs->setColor(red*mag, 0, mag, 0);
 }
 
@@ -88,11 +88,11 @@ void Nebula::newStar() {
     vec3_norm(dir,dir);
 
     // Magnitude
-    float mag = randfloat() - 0.5 + CONTAINER_RADIUS;
+    float mag = randfloat() - 0.5f + CONTAINER_RADIUS;
     vec3_scale(dir,dir,mag);
 
     // Size
-    float size = randfloat()*0.07+0.01;
+    float size = randfloat()*0.07f+0.01f;
 
     // Make star
     auto dps = new DoublePointStar(size);
@@ -105,7 +105,7 @@ void Nebula::newStar() {
     gs->setTranslation(dir);
     setColor(gs);
     vec4_norm(gs->getColor(),gs->getColor());
-    vec4_scale(gs->getColor(),gs->getColor(),0.2);
+    vec4_scale(gs->getColor(),gs->getColor(),0.2f);
     _gsarray.push_back(gs);
 }
 
@@ -116,7 +116,7 @@ void Nebula::newCloud() {
         vec3_norm(dir,dir);
 
         // Magnitude
-        float mag = randfloat() - 0.5 + CONTAINER_RADIUS;
+        float mag = randfloat() - 0.5f + CONTAINER_RADIUS;
         vec3_scale(dir,dir,mag);
 
         // Reject points already inside a nebula
@@ -124,12 +124,11 @@ void Nebula::newCloud() {
             continue;
 
         // Start the random walk
-        vec3 randir;
         while(true) {
             // Direction
             vec3 randir = {randfloat()-0.5f,randfloat()-0.5f,randfloat()-0.5f};
             vec3_norm(randir,randir);
-            vec3_scale(randir,randir,0.05);
+            vec3_scale(randir,randir,0.05f);
             vec3_add(dir,dir,randir);
             // If we walked out of the sphere then give up
             if (vec3_len(dir) > CONTAINER_RADIUS + 0.5)

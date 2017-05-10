@@ -20,12 +20,12 @@ GLfloat vbpos[] = {
 };
 
 GLfloat vbcolor[] = {
-    0.1,0,0,1,
-      1,0,0,1, // X Axis RED
-    0,0.1,0,1,
-    0,  1,0,1, // Y Axis GREEN
-    0,0,0.1,1,
-    0,0,  1,1  // Z Axis BLUE
+    0.1f,0,   0,   1,
+    1,   0,   0,   1, // X Axis RED
+    0,   0.1f,0,   1,
+    0,   1,   0,   1, // Y Axis GREEN
+    0,   0,   0.1f,1,
+    0,   0,   1,   1  // Z Axis BLUE
 };
 
 GLuint Axis::_vertexAttrIndex_pos;

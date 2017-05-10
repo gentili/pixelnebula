@@ -33,7 +33,7 @@ int main(int argc, char ** argv) {
 
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-            glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+            // glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
             GLFWwindow* window = glfwCreateWindow(1024, 768, "PixelNebula", NULL, NULL);
@@ -110,9 +110,8 @@ int main(int argc, char ** argv) {
                     if (curRadius > endRadius + 0.1) {
                         float totdif = startRadius - endRadius;
                         float raddif = curRadius - endRadius;
-                        cout << curRadius << " " << raddif / totdif << endl;
 
-                        curRadius -= raddif / totdif / 10;
+						curRadius -= 0.1f;// raddif / totdif / 10;
                         camera.setRadius(curRadius);
                     }
                     camera.addRotation(0.001f);
