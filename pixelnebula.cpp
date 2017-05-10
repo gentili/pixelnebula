@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <cstdlib>
+#include <ctime>
 
 #include <linmath.h>
 
@@ -66,7 +67,7 @@ int main(int argc, char ** argv) {
                             GL_DEBUG_TYPE_OTHER,
                             0,
                             GL_DEBUG_SEVERITY_NOTIFICATION,
-                            msg.length(),
+                            (GLsizei) msg.length(),
                             msg.c_str());
             }
 
@@ -114,7 +115,7 @@ int main(int argc, char ** argv) {
                         curRadius -= raddif / totdif / 10;
                         camera.setRadius(curRadius);
                     }
-                    camera.addRotation(0.001);
+                    camera.addRotation(0.001f);
                     camera.lookAtTarget();
                     pixellationFBO.begin();
                     nebula.draw();

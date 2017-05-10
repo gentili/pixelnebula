@@ -15,13 +15,14 @@ public:
 
     void setColor(vec4 c) {
         _outterPointStar.setColor(c);
-        vec4 tc;
-        vec4_add(tc,c,(vec4){0.1,0.1,0.1,0});
+        vec4 tc = { 0.1f,0.1f,0.1f,0.0f };
+        vec4_add(tc,c,tc);
         _innerPointStar.setColor(tc);
     }
 
     void setColor(float r, float g, float b, float a) {
-        setColor((vec4){r,g,b,a});
+		vec4 tc = { r,g,b,a };
+        setColor(tc);
     }
 
     float * getColor() {

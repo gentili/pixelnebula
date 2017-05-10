@@ -10,8 +10,8 @@ private:
     static const float MAX_SPHERE;
     static const float CONTAINER_RADIUS;
 
-    float _star_interpolation = 0.01;
-    float _glow_interpolation = 0.1;
+    float _star_interpolation = 0.01f;
+    float _glow_interpolation = 0.1f;
 
     std::vector<GlowSphere*> _gsarray;
     std::vector<DoublePointStar*> _dpsarray;

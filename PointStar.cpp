@@ -1,18 +1,18 @@
 #include "PointStar.h"
 #include "utils.h"
-#include "math.h"
+#include <cmath>
 
 PointStar::PointStar(float scale) : Renderable("concursionPoint") {
     _vertexAttrIndex_pos = _shaderProgram->getAttributeLocation("pos");
     _uniformIndex_color = _shaderProgram->getUniformLocation("color");
 
     vec3 vertexA;
-    vertexA[0] = -0.5*scale;
+    vertexA[0] = -0.5f*scale;
     vertexA[1] = 0;
     vertexA[2] = 0;
 
     vec3 vertexB;
-    vertexB[0] = 0.5*scale;
+    vertexB[0] = 0.5f*scale;
     vertexB[1] = 0;
     vertexB[2] = 0;
 
@@ -45,8 +45,8 @@ PointStar::PointStar(float scale) : Renderable("concursionPoint") {
         addTriangle(halfpiQ,vertexArray,indexArray,_indexCount,vertexA,vertexB,vertexC);
         addTriangle(piQ,vertexArray,indexArray,_indexCount,vertexA,vertexB,vertexC);
         addTriangle(minushalfpiQ,vertexArray,indexArray,_indexCount,vertexA,vertexB,vertexC);
-        vertexA[0] *= 0.6;
-        vertexB[0] *= 0.6;
+        vertexA[0] *= 0.6f;
+        vertexB[0] *= 0.6f;
         vertexC[1] *= 1.5;
     }
     
