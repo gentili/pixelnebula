@@ -85,6 +85,7 @@ int main(int argc, char ** argv) {
             Camera camera;
             camera.setUpVector(0, -1, 0);
             camera.setTarget(0, 0, 0);
+			camera.setRotation(0);
             camera.lookAtTarget();
 
             Axis axis;
@@ -111,7 +112,7 @@ int main(int argc, char ** argv) {
                         float totdif = startRadius - endRadius;
                         float raddif = curRadius - endRadius;
 
-						curRadius -= 0.1f;// raddif / totdif / 10;
+						curRadius -= raddif / totdif / 10;
                         camera.setRadius(curRadius);
                     }
                     camera.addRotation(0.001f);
@@ -119,7 +120,7 @@ int main(int argc, char ** argv) {
                     pixellationFBO.begin();
                     nebula.draw();
                     pixellationFBO.end();
-                    //axis.draw();
+                    axis.draw();
 
                     glfwSwapBuffers(window);
                     glfwPollEvents();
