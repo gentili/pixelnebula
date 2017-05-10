@@ -21,6 +21,7 @@ ADD_EXECUTABLE(pixelnebula pixelnebula.cpp
     DoublePointStar.h
     GlowSphere.h GlowSphere.cpp
     Nebula.h Nebula.cpp
+    PixellationFBO.h PixellationFBO.cpp
     ${DEPS})
 set_property(TARGET pixelnebula PROPERTY CXX_STANDARD 11)
 target_link_libraries(pixelnebula glfw)

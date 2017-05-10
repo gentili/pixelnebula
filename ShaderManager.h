@@ -65,6 +65,7 @@ public:
 	static void setShaderPrograms3DModelMatrix(mat4x4);
 	static void setShaderPrograms3DViewMatrix(mat4x4);
 	static void setShaderPrograms3DProjectionMatrix(mat4x4);
+	static ShaderProgram * getShaderProgram(std::string);
 	static ShaderProgram3D * getShaderProgram3D(std::string);
 
 private:

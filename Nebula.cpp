@@ -53,6 +53,10 @@ void Nebula::setColor(GlowSphere * gs) {
 }
 
 void Nebula::draw() {
+    glEnable(GL_BLEND);
+    glDisable(GL_DEPTH_TEST);
+    glBlendFunc(GL_ONE,GL_ONE);
+    glBlendEquation(GL_FUNC_ADD);
     grow();
     for (auto dpsitr = _dpsarray.begin();
             dpsitr != _dpsarray.end();

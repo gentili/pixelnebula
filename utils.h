@@ -5,22 +5,28 @@
 #include "deps/linmath.h"
 
 class vec3f {
-    public:
-        float x,y,z;
-        vec3f() { 
-            x=y=z=0; 
-        }
-        vec3f(vec3 v) {
-            x = v[0];
-            y = v[1];
-            z = v[2];
-        }
-        vec3f & operator*=(float rhs) {
-            x *= rhs;
-            y *= rhs;
-            z *= rhs;
-            return *this;
-        }
+public:
+    float x,y,z;
+    vec3f() { 
+        x=y=z=0; 
+    }
+    vec3f(vec3 v) {
+        x = v[0];
+        y = v[1];
+        z = v[2];
+    }
+    vec3f & operator*=(float rhs) {
+        x *= rhs;
+        y *= rhs;
+        z *= rhs;
+        return *this;
+    }
+};
+
+class texvec {
+public:
+    float x,y,z;
+    float s,t;
 };
 
 void checkGLError();

@@ -9,6 +9,7 @@
 #include "Perspective.h"
 #include "Axis.h"
 #include "Nebula.h"
+#include "PixellationFBO.h"
 #include "utils.h"
 
 using namespace std;
@@ -24,7 +25,6 @@ void APIENTRY debugCallBack(GLenum source,
 }
 
 int main(int argc, char ** argv) {
-    //  cout << "Initializing..." << endl;
         srand(static_cast<unsigned> (time(0))); 
 	try {
 		if (!glfwInit())
@@ -75,19 +75,23 @@ int main(int argc, char ** argv) {
 
 		Projection projection;
 		float aspect = (float) width / (float) height;
-		projection.fromPerspective(1.0472f, aspect, 0.1f, 10.0f); // 60 degrees
+		projection.fromPerspective(1.0472f, aspect, 0.1f, 100.0f); // 60 degrees
 		ShaderManager::setShaderPrograms3DProjectionMatrix(projection.asMatrix());
 
+                float startRadius = 40;
+                float curRadius = startRadius;
+                float endRadius = 4;
 		Camera camera;
 		camera.setUpVector(0, -1, 0);
 		camera.setTarget(0, 0, 0);
-		camera.setRadius(4.5);
 		camera.lookAtTarget();
 
                 Axis axis;
                 axis.setTranslation(0,0,0);
 
                 Nebula nebula;
+
+                PixellationFBO pixellationFBO(width,height,4);
 
 		GLuint vaoId;
 		glGenVertexArrays(1, &vaoId);
@@ -102,15 +106,20 @@ int main(int argc, char ** argv) {
                         glScissor(0,0,width,height);
                         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-                        glEnable(GL_BLEND);
-                        glDisable(GL_DEPTH_TEST);
-                        glBlendFunc(GL_ONE,GL_ONE);
-                        glBlendEquation(GL_FUNC_ADD);
+                        if (curRadius > endRadius + 0.1) {
+                            float totdif = startRadius - endRadius;
+                            float raddif = curRadius - endRadius;
+                            cout << curRadius << " " << raddif / totdif << endl;
 
-                        camera.addRotation(0.005);
+                            curRadius -= raddif / totdif / 10;
+                            camera.setRadius(curRadius);
+                        }
+                        camera.addRotation(0.001);
 		        camera.lookAtTarget();
+                        pixellationFBO.begin();
                         nebula.draw();
-                        axis.draw();
+                        pixellationFBO.end();
+                        //axis.draw();
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();

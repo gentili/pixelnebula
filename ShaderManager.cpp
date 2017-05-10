@@ -210,6 +210,18 @@ void ShaderManager::setShaderPrograms3DProjectionMatrix(mat4x4 projectionMatrix)
 	}
 }
 
+ShaderProgram * ShaderManager::getShaderProgram(string name) 
+{
+	auto itr = _shaderPrograms.find(name);
+	if (itr == _shaderPrograms.end()) {
+		string errstr("No such shader '");
+		errstr += name;
+                errstr += "'";
+		throw runtime_error(errstr);
+	}
+	return itr->second.get();
+}
+
 ShaderProgram3D * ShaderManager::getShaderProgram3D(string name) 
 {
 	auto itr = _3DshaderPrograms.find(name);
