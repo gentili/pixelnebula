@@ -1,0 +1,17 @@
+{
+  "configurations": [
+    {
+      "name": "x64-Release",
+      "generator": "Visual Studio 15 2017 Win64",
+      "buildRoot": "${env.LOCALAPPDATA}\\CMakeBuild\\${workspaceHash}\\build\\${name}",
+      "configurationType": "Release",
+      "cmakeCommandArgs": "",
+      "variables": [
+        {
+          "name": "glfw3_DIR",
+          "value": "C:\\Users\\genti\\AppData\\Local\\CMakeBuild\\2f211ddc-b8e9-0d3e-ab30-54e883582379\\build\\install\\lib\\cmake\\glfw3\\"
+        }
+      ]
+    }
+  ]
+}
