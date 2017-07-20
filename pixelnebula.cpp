@@ -31,12 +31,15 @@ int main(int argc, char ** argv) {
             if (!glfwInit())
                     throw runtime_error("glfwInit() failed");
 
+			GLFWmonitor * monitor = glfwGetPrimaryMonitor();
+			const GLFWvidmode * vidmode = glfwGetVideoMode(monitor);
+
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
             // glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-            GLFWwindow* window = glfwCreateWindow(1024, 768, "PixelNebula", NULL, NULL);
+            GLFWwindow* window = glfwCreateWindow(vidmode->width, vidmode->height, "PixelNebula", monitor, NULL);
             if (!window)
                     throw runtime_error("glfwCreateWindow failed");
 
@@ -120,7 +123,7 @@ int main(int argc, char ** argv) {
                     pixellationFBO.begin();
                     nebula.draw();
                     pixellationFBO.end();
-                    axis.draw();
+                    // axis.draw();
 
                     glfwSwapBuffers(window);
                     glfwPollEvents();
