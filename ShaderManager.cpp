@@ -83,18 +83,22 @@ void ShaderProgram::attachAndLink()
 	}
 	GLint attr_count;
 	glGetProgramiv(_id, GL_ACTIVE_ATTRIBUTES,&attr_count);
-	cout << "\tActive attributs:" << attr_count << endl;
+	cout << "\tActive attributes:" << attr_count << endl;
 	for (int i = 0; i < attr_count; i++) {
-		std::vector<GLchar> attrName(20);
-		glGetActiveAttrib(_id, i, (GLsizei) attrName.size(), NULL, NULL, NULL, &attrName[0]);
+		std::vector<GLchar> attrName(60);
+		GLint size;
+		GLenum type;
+		glGetActiveAttrib(_id, i, (GLsizei) attrName.size(), NULL, &size, &type, &attrName[0]);
 		cout << "\t\t" << attrName.data() << endl;
 	}
 	GLint uni_count;
 	glGetProgramiv(_id, GL_ACTIVE_UNIFORMS, &uni_count);
 	cout << "\tActive uniforms:" << uni_count << endl;
 	for (int i = 0; i < uni_count; i++) {
-		std::vector<GLchar> uniName(20);
-		glGetActiveUniform(_id, i, (GLsizei) uniName.size(), NULL, NULL, NULL, &uniName[0]);
+		std::vector<GLchar> uniName(60);
+		GLint size;
+		GLenum type;
+		glGetActiveUniform(_id, i, (GLsizei) uniName.size(), NULL, &size, &type, &uniName[0]);
 		cout << "\t\t" << uniName.data() << endl;
 	}
 }

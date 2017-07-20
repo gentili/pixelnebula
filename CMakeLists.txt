@@ -6,7 +6,7 @@ set(DEPS "${pixelnebula_SOURCE_DIR}/deps/glad/glad.h"
          "${pixelnebula_SOURCE_DIR}/deps/linmath.h")
 
 if (WIN32)
-	set ( glfw3_DIR "C:\\Users\\gentili\\AppData\\Local\\CMakeBuild\\b58d18a0-84a9-8631-9016-f4ea15a8fbd2\\build\\install\\lib\\cmake\\glfw3\\" )
+	set ( glfw3_DIR "C:\\Users\\genti\\AppData\\Local\\CMakeBuild\\2f211ddc-b8e9-0d3e-ab30-54e883582379\\build\\install\\lib\\cmake\\glfw3\\" )
 endif()
 find_package(glfw3 REQUIRED)
 

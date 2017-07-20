@@ -39,7 +39,7 @@ int main(int argc, char ** argv) {
             // glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-            GLFWwindow* window = glfwCreateWindow(vidmode->width, vidmode->height, "PixelNebula", monitor, NULL);
+            GLFWwindow* window = glfwCreateWindow(vidmode->width/2, vidmode->height/2, "PixelNebula", NULL, NULL);
             if (!window)
                     throw runtime_error("glfwCreateWindow failed");
 
@@ -74,7 +74,7 @@ int main(int argc, char ** argv) {
                             msg.c_str());
             }
 
-            if (!ShaderManager::Init())
+             if (!ShaderManager::Init())
                     throw runtime_error("ShaderManager::Init() failed");
 
             Projection projection;
