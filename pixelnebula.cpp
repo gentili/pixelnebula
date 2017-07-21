@@ -15,8 +15,6 @@
 
 using namespace std;
 
-GLFWwindow* window = NULL;
-
 void APIENTRY debugCallBack(GLenum source,
 	GLenum type,
 	GLuint id,
@@ -27,12 +25,21 @@ void APIENTRY debugCallBack(GLenum source,
     cout << "GL_DEBUG: " << msg << endl;
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if (action == GLFW_PRESS) {
-		cout << "Terminate due to keypress" << endl;
-		glfwSetWindowShouldClose(window, 1);
-	}
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	cout << "Terminate due to keypress" << endl;
+	glfwSetWindowShouldClose(window, 1);
 }
+
+static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
+	cout << "Terminate due to mouse movement" << endl;
+	glfwSetWindowShouldClose(window, 1);
+}
+
+static void mouse_button_callback(GLFWwindow * window, int button, int action, int mods) {
+	cout << "Terminate due to mouse press" << endl;
+	glfwSetWindowShouldClose(window, 1);
+}
+
 #ifdef WIN32
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	PSTR lpCmdLine, INT nCmdShow) {
@@ -52,11 +59,18 @@ int main(int argc, char ** argv) {
             // glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-            window = glfwCreateWindow(vidmode->width, vidmode->height, "PixelNebula", monitor, NULL);
+			GLFWwindow* window = glfwCreateWindow(vidmode->width, vidmode->height, "PixelNebula", monitor, NULL);
             if (!window)
                     throw runtime_error("glfwCreateWindow failed");
+
 			glfwSetKeyCallback(window, key_callback);
-            glfwMakeContextCurrent(window);
+
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			glfwSetCursorPosCallback(window, cursor_position_callback);
+            
+			glfwSetMouseButtonCallback(window, mouse_button_callback);
+
+			glfwMakeContextCurrent(window);
             gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
             glfwSwapInterval(1);
 
