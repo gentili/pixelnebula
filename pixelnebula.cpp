@@ -43,19 +43,17 @@ static void mouse_button_callback(GLFWwindow * window, int button, int action, i
 #ifdef WIN32
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	PSTR lpCmdLine, INT nCmdShow) {
-	bool sampleMode = false;
 	if ((strlen(lpCmdLine) == 0) ||
 		(strstr(lpCmdLine, "/c"))) {
 		MessageBox(NULL, "No configuration", "PixelNebula Configuration", MB_OK);
 		return 0;
 	}
 	else if (strstr(lpCmdLine, "/p")) {
-		sampleMode = true;
+		return 0;
 	}
 #else
 
 int main(int argc, char ** argv) {
-	bool sampleMode = false;
 #endif
     srand(static_cast<unsigned> (time(0))); 
     try {
@@ -70,13 +68,7 @@ int main(int argc, char ** argv) {
             // glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-			GLFWwindow* window;
-			if (sampleMode) {
-				window = glfwCreateWindow(500, 500, "PixelNebula", NULL, NULL);
-			}
-			else {
-				window = glfwCreateWindow(vidmode->width, vidmode->height, "PixelNebula", monitor, NULL);
-			}
+			GLFWwindow* window = glfwCreateWindow(vidmode->width, vidmode->height, "PixelNebula", monitor, NULL);
             if (!window)
                     throw runtime_error("glfwCreateWindow failed");
 
@@ -84,7 +76,7 @@ int main(int argc, char ** argv) {
 
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			glfwSetCursorPosCallback(window, cursor_position_callback);
-            
+
 			glfwSetMouseButtonCallback(window, mouse_button_callback);
 
 			glfwMakeContextCurrent(window);
