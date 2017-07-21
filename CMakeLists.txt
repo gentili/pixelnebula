@@ -7,7 +7,13 @@ set(DEPS "${pixelnebula_SOURCE_DIR}/deps/glad/glad.h"
 
 find_package(glfw3 REQUIRED)
 
-ADD_EXECUTABLE(pixelnebula pixelnebula.cpp 
+if (WIN32)
+	set(MAKE_WIN_EXE "WIN32")
+endif()
+
+ADD_EXECUTABLE(pixelnebula 
+	${MAKE_WIN_EXE}
+	pixelnebula.cpp 
     utils.h utils.cpp 
     ShaderManager.h ShaderManager.cpp 
     Shaders.h 

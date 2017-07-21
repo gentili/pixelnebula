@@ -15,6 +15,8 @@
 
 using namespace std;
 
+GLFWwindow* window = NULL;
+
 void APIENTRY debugCallBack(GLenum source,
 	GLenum type,
 	GLuint id,
@@ -25,7 +27,18 @@ void APIENTRY debugCallBack(GLenum source,
     cout << "GL_DEBUG: " << msg << endl;
 }
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	if (action == GLFW_PRESS) {
+		cout << "Terminate due to keypress" << endl;
+		glfwSetWindowShouldClose(window, 1);
+	}
+}
+#ifdef WIN32
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+	PSTR lpCmdLine, INT nCmdShow) {
+#else
 int main(int argc, char ** argv) {
+#endif
     srand(static_cast<unsigned> (time(0))); 
     try {
             if (!glfwInit())
@@ -39,10 +52,10 @@ int main(int argc, char ** argv) {
             // glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-            GLFWwindow* window = glfwCreateWindow(vidmode->width/2, vidmode->height/2, "PixelNebula", NULL, NULL);
+            window = glfwCreateWindow(vidmode->width, vidmode->height, "PixelNebula", monitor, NULL);
             if (!window)
                     throw runtime_error("glfwCreateWindow failed");
-
+			glfwSetKeyCallback(window, key_callback);
             glfwMakeContextCurrent(window);
             gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
             glfwSwapInterval(1);
