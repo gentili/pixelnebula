@@ -1,0 +1,8 @@
+{
+  "name": "pixelnebula",
+  "version-string": "0.0.1",
+  "dependencies": [
+    "glfw3"
+  ],
+  "builtin-baseline": "980ec0f49d81f794778386f7bd518b2cc9c092f0"
+}

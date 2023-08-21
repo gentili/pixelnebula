@@ -25,19 +25,21 @@ void APIENTRY debugCallBack(GLenum source,
     cout << "GL_DEBUG: " << msg << endl;
 }
 
+bool fullScreen = true;
+
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	cout << "Terminate due to keypress" << endl;
-	glfwSetWindowShouldClose(window, 1);
+    cout << "Terminate due to keypress" << endl;
+    glfwSetWindowShouldClose(window, 1);
 }
 
 static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
-	cout << "Terminate due to mouse movement" << endl;
-	glfwSetWindowShouldClose(window, 1);
+    cout << "Terminate due to mouse movement" << endl;
+    glfwSetWindowShouldClose(window, 1);
 }
 
 static void mouse_button_callback(GLFWwindow * window, int button, int action, int mods) {
-	cout << "Terminate due to mouse press" << endl;
-	glfwSetWindowShouldClose(window, 1);
+    cout << "Terminate due to mouse press" << endl;
+    glfwSetWindowShouldClose(window, 1);
 }
 
 #ifdef WIN32
@@ -50,7 +52,10 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 	else if (strstr(lpCmdLine, "/p")) {
 		return 0;
-	}
+    }
+    else if (strstr(lpCmdLine, "/w")) {
+        fullScreen = false;
+    }
 #else
 
 int main(int argc, char ** argv) {
@@ -68,16 +73,24 @@ int main(int argc, char ** argv) {
             // glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-			GLFWwindow* window = glfwCreateWindow(vidmode->width, vidmode->height, "PixelNebula", monitor, NULL);
+            // 1438, 810
+            GLFWwindow* window = NULL;
+            if (fullScreen)
+			    window = glfwCreateWindow(vidmode->width, vidmode->height, "PixelNebula", monitor, NULL);
+            else
+                glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
+                window = glfwCreateWindow(1024, 768, "PixelNebula", NULL, NULL);
+
             if (!window)
                     throw runtime_error("glfwCreateWindow failed");
 
-			glfwSetKeyCallback(window, key_callback);
 
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-			glfwSetCursorPosCallback(window, cursor_position_callback);
-
-			glfwSetMouseButtonCallback(window, mouse_button_callback);
+		    glfwSetKeyCallback(window, key_callback);
+            if (fullScreen) {
+			    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			    glfwSetCursorPosCallback(window, cursor_position_callback);
+			    glfwSetMouseButtonCallback(window, mouse_button_callback);
+            }
 
 			glfwMakeContextCurrent(window);
             gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
